@@ -1,4 +1,4 @@
-# La CI/CD à Eirbware
+# CI/CD Eirbware
 
 Afin de faciliter la maintenance ainsi que le déploiement des services proposés par Eirbware ainsi que les sites internets des clubs/assos, nous avons mis en place des méthodes de déploiement automatique.
 
@@ -10,12 +10,12 @@ Ainsi, pour utiliser une de nos actions, on peut définir un job ayant cette for
 ```yaml
   build-and-push:
     permissions:
-      id-token: write 
+      id-token: write
     uses: Eirbware/.github/.github/workflows/build-and-publish.yml@master
     with:
       file: "./Dockerfile"
       image_name: ${{ github.repository }}
-    secrets: 
+    secrets:
       registry_username: ${{ secrets.registry_username }}
       registry_api_key: ${{ secrets.registry_api_key }}
 ```
@@ -25,18 +25,18 @@ Il y 2 types d'entrées à ces jobs:
 - Les paramètres, sous l'option `with`
 - Les secrets, sous l'option `secrets`, qui contient les données sensibles dont le job a besoin
 
-!!!warning 
+!!!warning
     Il est vivement conseillé d'utiliser les jobs de cette façon pour déployer sur notre serveur, ainsi si un changement survient il n'y aura pas de modification à faire sur les dépôts utilsant l'action.
 
-!!!info 
+!!!info
     Pour définir les secrets et les utiliser comme vu au dessus, il faut aller dans les options du dépôt, dans secrets and variables et dans actions
 
-!!!info 
+!!!info
     Pour les services étant sous l'organisation github d'Eirbware, on peut aussi utiliser `secrets: inherit`
 
 ## Les services statiques
 
-Pour les sites statiques, nous mettons à disposition un job permettant de copier les fichiers du site vers le serveur. 
+Pour les sites statiques, nous mettons à disposition un job permettant de copier les fichiers du site vers le serveur.
 Ce job a cette forme:
 ```yaml
 deploy-static:
@@ -44,7 +44,7 @@ deploy-static:
     with:
         remote_user: "www-eirb"
         directory_to_copy: "./dist"
-    secrets: 
+    secrets:
         ssh_secret_key: ${{ secrets.ssh_private_key }}
         ssh_public_key: ${{ secrets.ssh_public_key }}
         ssh_cert: ${{ secrets.ssh_cert }}
@@ -57,7 +57,7 @@ Les paramètres de ce job sont:
 * `remote_user` (obligatoire): Le nom de l'utilisateur sur nos serveurs (usuellement `www-<nom-du-service>`)
 * `directory_to_copy` (obligatoire): Le dossier source, contenant les fichiers du site
 * `artifact_name` (ignoré par défaut): Nom de l'artéfact à utiliser (voir [ici](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts) pour la documentation sur le sujet)
-* `artifact_path` (ignoré par défaut, obligatoire si `artifact_name` est non nul): Chemin vers lequel l'artéfact doit être copié 
+* `artifact_path` (ignoré par défaut, obligatoire si `artifact_name` est non nul): Chemin vers lequel l'artéfact doit être copié
 
 ## Les services conteneurisées
 
@@ -69,17 +69,17 @@ Le job permettant de faire cela a cette forme:
 ```yaml
   build-and-push:
     permissions:
-      id-token: write 
+      id-token: write
     uses: Eirbware/.github/.github/workflows/build-and-publish.yml@master
     with:
       file: "./Dockerfile"
       image_name: ${{ github.repository }}
-    secrets: 
+    secrets:
       registry_username: ${{ secrets.registry_username }}
       registry_api_key: ${{ secrets.registry_api_key }}
 ```
 
-!!!warning 
+!!!warning
     Il ne faut pas omettre l'option `permissions: id-token: write`, sans quoi l'action ne fonctionnera pas.
 
 Il va compiler le docker puis publier l'image sur [registry.eirb.fr](https://registry.eirb.fr), d'où il pourra être pull par sur le serveur.
@@ -96,13 +96,13 @@ Ensuite, ce job a besoin de 2 secrets: `registry_username` et `registry_api_key`
 
 Si vous n'avez pas le `registry_username`, contactez-nous pour créer un compte, ce secret sera l'email associé au compte (plus de détails [ici](../gestion_vps/registry.md) pour le côté administrateur).
 
-Une fois que cela est fait, connectez vous avec ce compte sur [le registry](https://registry.eirb.fr), puis en haut à gauche accédez à l'écran `API keys`. 
+Une fois que cela est fait, connectez vous avec ce compte sur [le registry](https://registry.eirb.fr), puis en haut à gauche accédez à l'écran `API keys`.
 A partir de là, vous pouvez créer une clé api, que vous devrez mettre dans le secret `registry_api_key`.
 
-!!!info 
+!!!info
     Nous vous conseillons de créer une clé api par service, afin de pouvoir éventuellement supprimer/renouveler une clé d'un service sans affecter les autres.
 
-!!!warning 
+!!!warning
     Lors de la création de la clé, une date d'expiration doit être fixée, n'oubliez pas de renouveler la clé si la date est proche !
 
 ### Déploiement
@@ -167,13 +167,13 @@ services:
 Afin de gérer les différents environments, nous utilisons [portainer](https://www.portainer.io/), donc pour pouvoir déployer un service conteneurisé sur notre infrastructure, il faut d'abord que nous vous donnions accès à un environment.
 
 Ensuite, dans l'environment, il faut aller dans Stacks->Add stacks.
-Une fois dans cet écran, donnez un nom à votre stack (nous utilisons www-\<service\> par exemple) et sélétionnez l'option `Repository`. 
+Une fois dans cet écran, donnez un nom à votre stack (nous utilisons www-\<service\> par exemple) et sélétionnez l'option `Repository`.
 Après cela, remplissez les informations nécessaires (à minima Repository URL)
 
-!!!info 
+!!!info
     Si votre dépôt est privé (pas très compréhensible mais pourquoi pas), il faudra aussi mettre les logins d'un compte ayant un accès en lecture au dépôt. Evitez donc de mettre un compte github personnel, mais créez plutôt un compte à l'association, afin d'assurer une meilleure passation.
 
-Ensuite, il faut activer les `GitOps updates` et choisir le méchanisme `Webhook`. 
+Ensuite, il faut activer les `GitOps updates` et choisir le méchanisme `Webhook`.
 Gardez le lien, il servira pour l'étape de fin.
 
 Enfin, il ne reste plus qu'à ajouter les variables d'environment et à mettre l'access control sur `Restricted` en authorisant la team du même nom que l'environment.
@@ -188,7 +188,7 @@ deploy:
     needs: [ build-and-push ]
     uses: Eirbware/.github/.github/workflows/deploy-stack.yml@master
     # portainer_stack_webhook must be defined
-    secrets: 
+    secrets:
         portainer_stack_webhook: ${{ secrets.portainer_stack_webhook }}
         wireguard_conf: ${{ secrets.wireguard_conf }}
 ```
@@ -198,8 +198,8 @@ La seule chose dont il y a besoin, c'est de 2 secrets:
 * `portainer_stack_webhook` (obligatoire): c'est le lien récupéré lors de l'étape précédente
 * `wireguard_conf` (obligatoire): configuration vpn pour pouvoir communiquer avec portainer, nous vous la donnerons
 
-!!!warning 
+!!!warning
     Ne pas oublier d'utiliser le champ `needs: [ <job-before-1>, <job-before-2>, ... ]`, sans quoi portainer tentera de déployer la nouvelle version du service avant que l'image ait fini d'être publiée
 
-!!!info 
+!!!info
     Pour les services dont les dépôts sont sur l'organisation github d'Eirbware, il n'y a pas besoin de configurer la variable `wireguard_conf`, car elle est déjà configurée pour toute l'organisation.

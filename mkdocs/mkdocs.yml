@@ -28,7 +28,8 @@ nav:
     - respo_web/acces_vpn.md
     - respo_web/maj_site.md
     - respo_web/connexion_cas.md
-    - respo_web/ci.md
+    - respo_web/ci_eirbware.md
+    - respo_web/ci_manuel.md
     - respo_web/conseils.md
     - respo_web/eirbconnect_documentation.md
   - About: about.md
