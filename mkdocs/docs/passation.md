@@ -8,7 +8,7 @@ d'informations.
 ## Accès au local
 
 Généralement, tous les membres d'Eirbware ont accès par badge au local, le
-nouveau président d'Eirbware se voit remettre par le président sortant la clef
+nouveau président d'Eirbware se voit remettre par le président sortant la clé
 du local.
 
 Pour ce qui est de la procédure d'ajout d'accès au local, elle est partagée
@@ -37,7 +37,7 @@ puis il a la responsabilité de le partager avec **tous les membres d'Eirbware**
 ## Gestionnaire de mots de passes : Vaultwarden
 
 On utilise [Vaultwarden](https://github.com/dani-garcia/vaultwarden), une
-alternative open-source à Bitwarden, qui est compatible avec 
+alternative open-source à Bitwarden, qui est compatible avec
 [les clients](https://github.com/bitwarden/clients) développés par Bitwarden,
 qui sont [(globalement) open-source](https://community.bitwarden.com/t/concerns-over-bitwarden-moving-away-from-open-source-what-does-our-future-hold/74800)
 
@@ -180,23 +180,23 @@ trouvable sur [le vaultwarden](https://vault.eirb.fr).
 Il suffit ensuite d'exécuter la commande suivante :
 
 ```sh
-sudo cert_new -k <chemin vers clef publique> adm-<admin name>
+sudo cert_new -k <chemin vers clé publique> adm-<admin name>
 ```
 
 Par exemple, la commande suivante va créer un certificat `/tmp/id-cert.pub` pour
-la clef publique donnée `/tmp/id.pub` pour l'utilisateur `adm-ndacremont`.
+la clé publique donnée `/tmp/id.pub` pour l'utilisateur `adm-ndacremont`.
 
 ```sh
 sudo cert_new -k /tmp/id.pub adm-ndacremont
 ```
 
-Le mieux est de demander la clef `SSH` publique des membres d'Eirbware
+Le mieux est de demander la clé `SSH` publique des membres d'Eirbware
 
 !!!info "Accès à la _passphrase_ du certificat"
 
     Avant, seul le président d'Eirbware avait accès à la _passphrase_ du
     certificat.
-    
+
     Sachant que les accès à la mise à jour des sites se fait maintenant en
     `SFTP`, il a été jugé plus simple de permettre à tous les membres ayant
     accès au serveur de créer de nouveaux accès `SFTP` quitte à ce qu'ils

@@ -32,22 +32,22 @@ sudo new_admin <cas_login>  # Créé l'utilisateur adm-<cas_login>
 
 #### Création de l'accès `SSH`
 
-Comme dit précédemment, l'accès par `SSH` se fait par clef et certificat, le
-nouvel administrateur devra créer une paire de clefs spécifiquement pour
+Comme dit précédemment, l'accès par `SSH` se fait par clé et certificat, le
+nouvel administrateur devra créer une paire de clés spécifiquement pour
 Eirbware en utilisant la commande suivante :
 
-```title="Création d'une paire de clefs `SSH` par le futur administrateur"
+```title="Création d'une paire de clés `SSH` par le futur administrateur"
 ssh-keygen -t ed25519
 ```
 
-Il devra ensuite transmettre la clef publique à l'utilisateur qui créé l'accès
+Il devra ensuite transmettre la clé publique à l'utilisateur qui créé l'accès
 `SSH` afin de créer le certificat.
 
-!!!info "Stockage des clefs publiques"
+!!!info "Stockage des clés publiques"
 
-    Les clefs publiques des utilisateurs sont stockées dans le dossier
+    Les clés publiques des utilisateurs sont stockées dans le dossier
     `/int/int-ssh/public_keys` avec le nom `id_<cas_login>.pub`, cela permet de
-    créer un nouveau certificat sans avoir à retransmettre la clef publique.
+    créer un nouveau certificat sans avoir à retransmettre la clé publique.
 
     Il peut être utile de créer un nouveau certificat si un admin veut utiliser
     un accès `SFTP` ou si un respo web s'occuper de plusieurs sites
@@ -61,7 +61,7 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub adm-<cas_login>
 
 !!!info "Passphrase du certificat d'Eirbware"
 
-    Afin de signer la clef publique, la passphrase du certificat d'Eirbware est
+    Afin de signer la clé publique, la passphrase du certificat d'Eirbware est
     nécessaire, vous la trouverez sur le [Vaultwarden d'Eirbware](https://vault.eirb.fr).
 
 #### Création de l'accès wireguard
@@ -78,21 +78,21 @@ En vrai c'est pas dispo atm
 Donner les accès au respo web d'un asso à son site se fait en 2 étapes:
 
 * Créer un accès `SSH`
-* Créer un accès wireguard 
+* Créer un accès wireguard
 
-#### Création de l'accès ssh utilisateur 
+#### Création de l'accès ssh utilisateur
 
-Similairement à la création d'un administrateur, le respo web devra créer une paire de clefs spécifiquement pour Eirbware, de la manière suivante:
+Similairement à la création d'un administrateur, le respo web devra créer une paire de clés spécifiquement pour Eirbware, de la manière suivante:
 
-```title="Création d'une paire de clefs `SSH` par le futur administrateur"
+```title="Création d'une paire de clés `SSH` par le futur administrateur"
 ssh-keygen -t ed25519
 ```
 
 Il devra ensuite transmettre sa clé publique à un administrateur d'Eirbware.
 
-!!!info "Stockage des clefs publiques"
+!!!info "Stockage des clés publiques"
 
-    Comme dit précédemment, les clefs publiques des utilisateurs sont stockées dans le dossier
+    Comme dit précédemment, les clés publiques des utilisateurs sont stockées dans le dossier
     `/int/int-ssh/public_keys` avec le nom `id_<cas_login>.pub`.
 
 Ensuite, celui-ci créera un certificat avec la commande suivante:
@@ -103,7 +103,7 @@ sudo cert_new -k /int/int-ssh/public_keys/id_<cas_login>.pub www-<nom_site> <cas
 
 !!!info "Passphrase du certificat d'Eirbware"
 
-    Afin de signer la clef publique, la passphrase du certificat d'Eirbware est
+    Afin de signer la clé publique, la passphrase du certificat d'Eirbware est
     nécessaire, vous la trouverez sur le [Vaultwarden d'Eirbware](https://vault.eirb.fr).
 
 #### Création de l'accès wireguard
@@ -121,6 +121,6 @@ sudo cert_revoke <certificate_ID>
 ```
 
 !!!info "Réactiver un certificat"
-    
-    Si un certificat a été révoqué par erreur, il est possible d'annuler cette action avec l'option `-r` de la commande 
+
+    Si un certificat a été révoqué par erreur, il est possible d'annuler cette action avec l'option `-r` de la commande
     `cert_revoke`
