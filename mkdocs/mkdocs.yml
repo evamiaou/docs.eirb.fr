@@ -19,6 +19,7 @@ nav:
     - gestion_vps/monitoring.md
     - gestion_vps/registry.md
     - gestion_vps/keycloak.md
+    - gestion_vps/maj_email.md
   - Passation: passation.md
   - Github: github.md
   - HOWTO respo web:
